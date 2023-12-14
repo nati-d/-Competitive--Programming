@@ -1,22 +1,24 @@
 class Solution:
     def subdomainVisits(self, cpdomains: List[str]) -> List[str]:
-        res = defaultdict(int)
-        lastres = []
-        for i in range(len(cpdomains)):
-            inputo = cpdomains[i].split()
-            inputo[0] = int(inputo[0])
-            inputo[1] = inputo[1].split('.')
-            print(inputo)
+        result = []
+        dic = defaultdict(int)
+        c= cpdomains
 
-            for i in range(len(inputo[1])-1, -1, -1):
-                # res[inputo[1][i]] += inputo[0]
-                # if i != 0:
-                #     inputo[1][i-1]+='.'+inputo[1][i]
-               res[".".join(inputo[1][i:])]+=inputo[0]
-               print(res)
-        for key,val in res.items():
-            lastres.append(str(val)+" "+key)
-        return lastres
+        for i in range(len(c)):
+            c[i] = list(c[i].split())
+
+            
+            c[i][1] = list(c[i][1].split("."))
+            for j in range(len(c[i][1])):
+                key = ".".join(c[i][1][j:])
+                dic[key]+= int(c[i][0])
+
+        for key, values in dic.items():
+            s = str(values) + " " + key
+            result.append(s)
+
+        return result
+        
                     
 
         
