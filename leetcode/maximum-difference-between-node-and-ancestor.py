@@ -6,30 +6,23 @@
 #         self.right = right
 class Solution:
     def maxAncestorDiff(self, root: Optional[TreeNode]) -> int:
-        mx = 0
-        def maxA(nd):
-            nonlocal mx
-            # nonlocal mn
-            if not nd.left and not nd.right:
-                return [nd.val,nd.val]
-            # mx = max(mx,nd.val)
-            # mn = min(mn,nd.val)
-            mn = nd.val
-            mxn = nd.val
-            if nd.left:
-                a, b = maxA(nd.left)
-                mx = max(mx,abs(nd.val-a), abs(nd.val-b))
-                mn = min(mn,a)
-                mxn = max(mxn,b)
-            if nd.right:
-                a, b = maxA(nd.right)
-                mx = max(mx,abs(nd.val-a), abs(nd.val-b))
-                mn = min(mn,a)
-                mxn = max(mxn,b)
-            print(mn,mxn)
-            return [mn,mxn]
+        ans = 0
+        def maxA(nd,maxx,minn):
+            nonlocal ans
+            if not nd:
+                ans = max(ans, maxx-minn)
+                return []
             
-        maxA(root)
-        return mx
+            maxx = max(maxx, nd.val)
+            minn = min(minn,nd.val)
+
+            ls = maxA(nd.left,maxx,minn)
+            rs = maxA(nd.right,maxx,minn)
+
+            return ls and rs
+            
+            
+        maxA(root,0,100000000)
+        return ans
 
         
